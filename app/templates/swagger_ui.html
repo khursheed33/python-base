@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Python Base | APIs</title>
+<link href="/static/swagger-ui.css" rel="stylesheet">
+</head>
+<body>
+<div id="swagger-ui"></div>
+<script src="/static/swagger-ui-bundle.js"></script>
+<script>
+window.onload = function() {
+    const ui = SwaggerUIBundle({
+        url: "/openapi.json",
+        dom_id: '#swagger-ui',
+        presets: [
+            SwaggerUIBundle.presets.apis,
+            SwaggerUIBundle.SwaggerUIStandalonePreset
+        ],
+        layout: "BaseLayout",
+        deepLinking: true,
+        docExpansion: "none",
+        defaultModelsExpandDepth: -1,
+        defaultModelExpandDepth: -1,
+        defaultModelRendering: "example",
+        displayOperationId: true,
+        tryItOutEnabled: true,
+        showExtensions: true,
+        showCommonExtensions: true,
+    })
+}
+</script>
+</body>
+</html>

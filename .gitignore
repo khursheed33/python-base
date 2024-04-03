@@ -1,0 +1,6 @@
+.env
+config.json
+logs/*
+.venv
+*.pyc
+__pychache__
