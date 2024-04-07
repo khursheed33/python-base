@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: Python-Base 
+    ports:
+      - "3301:80"  
+    environment:
+      - AUTHOR=Khursheed Gaddi 
+    labels:
+      - "com.example.description=A Python base that has all required feature for a enterprise level app" 
+      - "com.example.version=1.0"
+      - "com.example.vendor=2Bits"

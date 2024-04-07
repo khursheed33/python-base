@@ -22,7 +22,6 @@ class Settings:
         # Logging configuration
         log_level = os.getenv("APP_LOG_LEVEL", "INFO")
         log_file = os.getenv("APP_LOG_FILE", log_file_path)
-        print("Logs: ", log_file)
             
         logging.basicConfig(
             level=log_level,

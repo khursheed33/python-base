@@ -1,3 +1,5 @@
+# app/main.py
+
 import uvicorn
 from fastapi import FastAPI, APIRouter
 from fastapi.staticfiles import StaticFiles
@@ -12,16 +14,16 @@ class App(RoutePaths):
         self.settings = Settings()
         self.base_router = APIRouter(prefix=self.API_PREFIX)
         self.setup_routes()
-        self.setup_static_files()
+        self.setup_static_files()  # Call setup_static_files method
 
+    def setup_static_files(self):
+        self.app.mount("/static", StaticFiles(directory="app/templates"), name="static")
+        
     def setup_routes(self):
         docs_router = DocsRouter()
         user_router = UserRouter()
-        self.base_router.include_router(user_router.router)
-        self.base_router.include_router(docs_router.router)
-
-    def setup_static_files(self):
-        self.base_router.mount("/static", StaticFiles(directory="app/templates"), name="static")
+        self.app.include_router(user_router.router)
+        self.app.include_router(docs_router.router)
 
     def run(self):
         uvicorn.run(self.app, host=self.settings.APP_HOST, port=self.settings.APP_PORT)
