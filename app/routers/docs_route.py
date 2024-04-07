@@ -3,16 +3,17 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from app.utils.error_logger import error_logging
 from app.routers.route_paths import RoutePaths
+from app.routers.route_tags import RouteTags
 
-class DocsRouter(RoutePaths):
+class DocsRouter():
     def __init__(self):
-        self.router = APIRouter(prefix=self.API_PREFIX)
+        self.router = APIRouter(prefix=RoutePaths.API_PREFIX)
         self.templates = Jinja2Templates(directory="app/templates")
         self.setup_routes()
 
     @error_logging
     def setup_routes(self):
-        @self.router.get(self.DOCS, response_class=HTMLResponse, include_in_schema=False, tags=['docs'])  
+        @self.router.get(RoutePaths.DOCS, response_class=HTMLResponse, include_in_schema=False, tags=[RouteTags.DOCS])  
         async def custom_swagger_ui_html(request: Request):
             """
             Custom route to serve Swagger UI HTML.
@@ -21,6 +22,6 @@ class DocsRouter(RoutePaths):
 
         # Instead of including the function directly, include the router itself
         self.router.include_router(
-            self.router,
+            custom_swagger_ui_html,
             tags=["Custom Swagger UI"],
         )

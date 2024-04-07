@@ -4,4 +4,6 @@ class RoutePaths:
     BASE_PATH = "http://localhost:3301"
     
     USERS = "/users"
+    AUTH = "/auth"
     DOCS = "/docs"
+    STATIC = "/static"
