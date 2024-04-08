@@ -7,3 +7,4 @@ class RoutePaths:
     AUTH = "/auth"
     DOCS = "/docs"
     STATIC = "/static"
+    PING = "/ping"

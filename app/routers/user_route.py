@@ -2,8 +2,8 @@
 
 from fastapi import APIRouter
 from app.models.user_model import UserModel
-from app.routers.route_paths import RoutePaths
-from app.routers.route_tags import RouteTags
+from app.constants.route_paths import RoutePaths
+from app.constants.route_tags import RouteTags
 
 class UserRouter():
     def __init__(self):

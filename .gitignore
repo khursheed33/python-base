@@ -4,3 +4,4 @@ logs/*
 .venv
 *.pyc
 __pychache__
+htmlcov

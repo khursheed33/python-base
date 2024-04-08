@@ -6,8 +6,8 @@ from datetime import  timedelta
 
 from app.models.user_model import UserModel
 from dotenv import dotenv_values
-from app.routers.route_paths import RoutePaths
-from app.routers.route_tags import RouteTags
+from app.constants.route_paths import RoutePaths
+from app.constants.route_tags import RouteTags
 from app.controllers.auth_controller import AuthController
 
 config = dotenv_values(".env")

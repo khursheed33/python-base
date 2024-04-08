@@ -7,7 +7,6 @@ import sys
 class Settings:
     def __init__(self):
         self.load_env()
-        
         self.APP_ENV = os.getenv("APP_ENV", "DEVELOPMENT")
         self.APP_HOST = os.getenv("APP_HOST", "localhost")
         self.APP_PORT = int(os.getenv("APP_PORT", 3301))
