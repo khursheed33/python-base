@@ -6,7 +6,7 @@ import sys
 
 class Settings:
     def __init__(self):
-        load_dotenv()
+        self.load_env()
         
         self.APP_ENV = os.getenv("APP_ENV", "DEVELOPMENT")
         self.APP_HOST = os.getenv("APP_HOST", "localhost")
@@ -32,3 +32,16 @@ class Settings:
         if self.APP_ENV == "PRODUCTION":
             sys.stdout = open(os.devnull, 'w')
             sys.stderr = open(os.devnull, 'w')
+            
+        
+
+    def load_env(self):
+        if os.path.exists('.env'):
+            load_dotenv()
+            print('.env file loaded successfully.')
+        else:
+            if os.path.exists('.env.example'):
+                load_dotenv(dotenv_path='.env.example')
+                print('.env.example loaded because .env file not found.')
+            else:
+                print('Neither .env nor .env.example found.')
