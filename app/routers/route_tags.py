@@ -1,4 +1,5 @@
 class RouteTags:
-    USERS = "users"
-    DOCS = "docs"
-    AUTH = "auth"
+    USERS = "Users"
+    DOCS = "Documentations"
+    AUTH = "Authentication"
+    TESTS = "API Testings"

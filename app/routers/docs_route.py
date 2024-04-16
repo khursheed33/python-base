@@ -11,7 +11,6 @@ class DocsRouter():
         self.templates = Jinja2Templates(directory="app/templates")
         self.setup_routes()
 
-    @error_logging
     def setup_routes(self):
         @self.router.get(RoutePaths.DOCS, response_class=HTMLResponse, include_in_schema=False, tags=[RouteTags.DOCS])  
         async def custom_swagger_ui_html(request: Request):
@@ -19,9 +18,3 @@ class DocsRouter():
             Custom route to serve Swagger UI HTML.
             """
             return self.templates.TemplateResponse("swagger_ui.html", {"request": request})
-
-        # Instead of including the function directly, include the router itself
-        self.router.include_router(
-            custom_swagger_ui_html,
-            tags=["Custom Swagger UI"],
-        )
