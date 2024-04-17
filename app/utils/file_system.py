@@ -2,13 +2,15 @@ import os
 import shutil
 
 class FileSystem:
+    def __init__(self) -> None:
+        pass
     def create_file(file_path:str):
         if not os.path.exists(FileSystem.clean_path(file_path)):
             with open(file_path, "x"):
                 print("File Created: ", file_path)
                 pass
             
-    def clean_path(path:str):
+    def clean_path(self,path:str):
         """
         Clean a file path to ensure compatibility across different operating systems.
         """

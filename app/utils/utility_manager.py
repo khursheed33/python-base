@@ -17,6 +17,6 @@ class UtilityManager(FileSystem,EnvManager):
     def data_mapper(self, prompt_template:str, kwargs:dict ):
         return data_mapper(prompt_template=prompt_template, kwargs=kwargs)
     
-    def get_project_dir():
+    def get_project_dir(self):
         return get_project_directory()
     

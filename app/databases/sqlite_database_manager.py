@@ -5,24 +5,17 @@ from datetime import datetime
 from app.utils.utility_manager import UtilityManager
 from app.enums.env_keys import EnvKeys
 
-
 class SQLiteDBManager(UtilityManager):
     _instance = None
     
     def __init__(self):
-        super().__init__()
-
-    def __new__(self):
-        if self._instance is None:
-            self._instance = super(SQLiteDBManager, self).__new__(self)
-            project_dir = self.get_project_dir()
-            db_path = f"{project_dir}/{self.get_env_variable(EnvKeys.SQLITE_DB_PATH.value)}"
-            db_path = self.clean_path(db_path)
-            self._instance.conn_params = {
-                'database':db_path,
-            }
-            
-        return self._instance
+        # super().__init__()
+        project_dir = self.get_project_dir()
+        db_path = f"{project_dir}/{self.get_env_variable(EnvKeys.SQLITE_DB_PATH.value)}"
+        db_path = self.clean_path(db_path)
+        self.conn_params = {
+            'database': db_path,
+        }
 
     def _get_connection(self):
         try:
@@ -66,4 +59,3 @@ class SQLiteDBManager(UtilityManager):
         finally:
             cursor.close()
             conn.close()
-
