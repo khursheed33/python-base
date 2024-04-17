@@ -18,7 +18,7 @@ class LLMInstanceManager:
         
         return self.get_instance(user_id=user_id,conversation_id=conversation_id)
 
-    def get_instance(self, user_id, conversation_id)->LangchainManager:
+    def get_instance(self, user_id, conversation_id) -> LangchainOpenAIManager:
         # Retrieve instance from the dictionary
         return self.instances.get(user_id, {}).get(conversation_id, None)
 
