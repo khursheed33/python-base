@@ -38,17 +38,13 @@ class ChromaVectorStoreManager(UtilityManager):
         except Exception as e:
             print(f"Error creating vector store: {e}")
     
-    def search_in_vector(self, user_question: str, top_k: int = 3):
+    def search_in_vector(self, user_question: str, top_k: int = 3,collection_name:str='langchain'):
         """Search for similar documents in the vector store based on a user question."""
         try:
-            response = self.vectordb.similarity_search(query=user_question, k=top_k, collection_name="TABLE_DATA")
+            response = self.vectordb.similarity_search(query=user_question, k=top_k, collection_name=collection_name)
             system_answer = '\n'.join(doc.page_content for doc in response)
             return system_answer
         
         except Exception as e:
             print(f"Error searching in vector store: {e}")
             return None
-
-class FaissDBManager:
-    def __init__(self):
-        pass
