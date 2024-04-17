@@ -1,9 +1,9 @@
-from app.llm.langchain_claude_manager import LangchainBedrockManager
+from app.databases.sqlite_database_manager import SQLiteDBManager
 
+db_managaer = SQLiteDBManager()
+query = """
+SELECT * FROM users;
+"""
+result = db_managaer._execute_query(query=query)
 
-
-bedrock_llm = LangchainBedrockManager()
-
-res = bedrock_llm.run_conversational_chain(prompt="What is the capital of France?")
-
-print("RES:", res)
+print(result)
