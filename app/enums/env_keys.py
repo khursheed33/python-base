@@ -4,6 +4,7 @@ class EnvKeys(Enum):
     APP_HOST='APP_HOST'
     APP_PORT='APP_PORT'
     APP_ENVIRONMENT = "APP_ENVIRONMENT"
+    APP_OPENAI_KEY = 'APP_OPENAI_KEY'
     # Logging settings
     LOG_LEVEL='LOG_LEVEL'
     LOG_FILE='LOG_FILE'

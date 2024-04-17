@@ -11,7 +11,7 @@ def test_read_users():
     assert response.status_code == 200
     assert response.json() == [{"username": "Rick"}, {"username": "Morty"}]
 
-@pytest.mark.parametrize("user", [{"username": "TestUser", "email": "testuser@example.com"}])
+@pytest.mark.parametrize("user", [{"id": 1,"username": "TestUser", "email": "testuser@example.com"}])
 def test_create_user(user):
     response = client.post("/api/v1/users/", json=user)
     assert response.status_code == 200
