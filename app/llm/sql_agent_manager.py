@@ -7,7 +7,6 @@ from langchain_community.chat_models import ChatOpenAI
 from langchain.agents.agent import AgentExecutor
 from langchain.prompts import PromptTemplate
 
-
 from app.utils.utility_manager import UtilityManager
 from app.enums.env_keys import EnvKeys
 
