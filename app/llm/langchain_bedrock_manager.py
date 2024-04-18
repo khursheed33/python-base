@@ -1,5 +1,6 @@
 import boto3
 from langchain.llms.bedrock import Bedrock
+from langchain_community.embeddings import BedrockEmbeddings
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationChain, LLMChain
 from langchain.output_parsers import StructuredOutputParser
@@ -23,6 +24,11 @@ class LangchainBedrockManager(UtilityManager):
         region_name=self.REGION, 
         aws_access_key_id=self.ACCESS_KEY_ID,
         aws_secret_access_key=self.SECRET_ACCESS_KEY
+        )
+        
+        self.BEDROCK_EMBEDDINGS = BedrockEmbeddings(
+            model_id=self.MODEL_ID,
+            client=self.BOTO_BEDROCK_CLIENT,
         )
         
         self.BEDROCK_LLM =  Bedrock(
