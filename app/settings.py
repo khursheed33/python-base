@@ -5,18 +5,20 @@ import sys
 import logging.handlers 
 from dotenv import load_dotenv
 import socket
+from app.utils.utility_manager import UtilityManager
 from app.enums.env_keys import EnvKeys
-
-class Settings:
+from app.enums.app_env_type import AppEnvironment
+class Settings(UtilityManager):
     
     def __init__(self):
+        super().__init__()
         try:
             load_dotenv(".env.example")
-            self.APP_HOST = os.getenv(EnvKeys.APP_HOST.value, "localhost")
-            self.APP_PORT = int(os.getenv(EnvKeys.APP_PORT.value, 3301))
-            self.APP_ENVIRONMENT = os.environ[EnvKeys.APP_ENVIRONMENT.value]
-            fmt = os.environ[EnvKeys.APP_LOGGING_FORMATTER.value]
-            level = os.environ[EnvKeys.APP_LOGGING_LEVEL.value]
+            self.APP_HOST = self.get_env_variable(EnvKeys.APP_HOST.value)
+            self.APP_PORT = int(self.get_env_variable(EnvKeys.APP_PORT.value, 3301))
+            self.APP_ENVIRONMENT =  self.get_env_variable(EnvKeys.APP_ENVIRONMENT.value)
+            fmt =  self.get_env_variable(EnvKeys.APP_LOGGING_FORMATTER.value)
+            level =  self.get_env_variable(EnvKeys.APP_LOGGING_LEVEL.value)
             logging.getLogger().handlers.clear()
             # Ensure logs directory exists
             logs_dir = 'logs'
@@ -24,13 +26,13 @@ class Settings:
             
             logging.basicConfig(
                 handlers=[logging.handlers.RotatingFileHandler(
-                    os.environ[EnvKeys.APP_LOGGING_FILE.value], 
-                    maxBytes=int(os.environ[EnvKeys.APP_LOGGING_MAXBYTES.value]),
-                    backupCount=int(os.environ[EnvKeys.APP_LOGGING_BACKUPCOUNT.value]))  
+                     self.get_env_variable(EnvKeys.APP_LOGGING_FILE.value),
+                    maxBytes=int( self.get_env_variable(EnvKeys.APP_LOGGING_MAXBYTES.value)),
+                    backupCount=int( self.get_env_variable(EnvKeys.APP_LOGGING_BACKUPCOUNT.value)))  
                 ],
                 level=level,
                 format=fmt,
-                datefmt=os.environ[EnvKeys.APP_LOGGING_DATEFORMAT.value]
+                datefmt= self.get_env_variable(EnvKeys.APP_LOGGING_DATEFORMAT.value)
             )
             # set up logging to console
             console = logging.StreamHandler()
@@ -44,7 +46,7 @@ class Settings:
 
             logging.getLogger('watchfiles').setLevel(logging.ERROR)
             # Disable Prints in Production
-            if self.APP_ENVIRONMENT == "PRODUCTION":
+            if self.APP_ENVIRONMENT == AppEnvironment.DEV.value:
                 sys.stdout = open(os.devnull, 'w')
                 sys.stderr = open(os.devnull, 'w')
         except Exception as err:
