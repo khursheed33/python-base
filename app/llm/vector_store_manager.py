@@ -1,6 +1,5 @@
 import os
 from langchain_community.vectorstores.chroma import Chroma
-from typing import List
 from app.enums.env_keys import EnvKeys
 from app.utils.utility_manager import UtilityManager
 from langchain_community.embeddings import OpenAIEmbeddings
