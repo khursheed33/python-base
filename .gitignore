@@ -4,4 +4,8 @@ logs/*
 .venv
 *.pyc
 __pychache__
-htmlcov
+**__pycache__
+.coverage
+coverage.json
+.pytest_cache
+**.db
