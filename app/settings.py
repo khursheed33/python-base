@@ -15,7 +15,7 @@ class Settings(UtilityManager):
         try:
             load_dotenv(".env.example")
             self.APP_HOST = self.get_env_variable(EnvKeys.APP_HOST.value)
-            self.APP_PORT = int(self.get_env_variable(EnvKeys.APP_PORT.value, 3301))
+            self.APP_PORT = int(self.get_env_variable(EnvKeys.APP_PORT.value))
             self.APP_ENVIRONMENT =  self.get_env_variable(EnvKeys.APP_ENVIRONMENT.value)
             fmt =  self.get_env_variable(EnvKeys.APP_LOGGING_FORMATTER.value)
             level =  self.get_env_variable(EnvKeys.APP_LOGGING_LEVEL.value)

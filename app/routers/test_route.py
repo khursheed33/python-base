@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter,HTTPException
 from app.models.user_model import UserModel
-from app.routers.route_paths import RoutePaths
+from app.constants.route_paths import RoutePaths
 from app.routers.route_tags import RouteTags
 from app.utils.extract_data import extract_data
 from pathlib import Path
