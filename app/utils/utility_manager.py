@@ -4,7 +4,8 @@ from app.utils.extract_data import extract_data
 from app.utils.data_mapper import data_mapper
 from app.utils.env_manager import EnvManager
 from get_cwt import get_project_directory
-class UtilityManager(FileSystem,EnvManager):
+from app.utils.document_loader import DocumentLoader
+class UtilityManager(FileSystem, EnvManager, DocumentLoader):
     def __init__(self):
         super().__init__()
     
@@ -19,4 +20,5 @@ class UtilityManager(FileSystem,EnvManager):
     
     def get_project_dir(self):
         return get_project_directory()
+
     
