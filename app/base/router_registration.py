@@ -13,6 +13,6 @@ class RouterRegistration:
         shared_router = SharedRouter()
         
         app.include_router(shared_router.router)
-        app.include_router(test_router.router)
         app.include_router(docs_router.router)
         app.include_router(user_router.router)
+        app.include_router(test_router.router)

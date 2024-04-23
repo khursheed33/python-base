@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from app.utils.error_logger import error_logging
 from app.constants.route_paths import RoutePaths
 from app.constants.route_tags import RouteTags
 

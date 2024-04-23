@@ -1,0 +1,2 @@
+class DataTypeConstants:
+    STRING = 'string'

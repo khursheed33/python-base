@@ -1,3 +1,2 @@
-from enum import Enum
-class AppMessages(Enum):
+class AppMessages:
     I_AM_ALIVE = "I am Alive!"
