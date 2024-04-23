@@ -10,7 +10,7 @@ class FileSystem:
                 print("File Created: ", file_path)
                 pass
             
-    def clean_path(self,path:str):
+    def clean_path(self,path:str) -> str:
         """
         Clean a file path to ensure compatibility across different operating systems.
         """
