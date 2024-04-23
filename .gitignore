@@ -12,3 +12,4 @@ coverage.json
 
 **/vectors
 **.db
+**/uploads
