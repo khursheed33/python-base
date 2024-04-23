@@ -9,3 +9,6 @@ class RoutePaths:
     DOCS = "/docs"
     STATIC = "/static"
     PING = "/ping"
+    
+    DOCS_UPLOAD = "/docs/upload"
+    DOCS_SEARCH = "/docs/search"

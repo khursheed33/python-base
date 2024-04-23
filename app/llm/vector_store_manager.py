@@ -11,7 +11,7 @@ class ChromaVectorStoreManager(UtilityManager):
         super().__init__()
         self.project_dir = self.get_project_dir()
         self.create_folder(folder_path='app/vectors')
-        self.vector_path = self.clean_path(f'{self.project_dir}/app/vectors')
+        self.vector_path = self.clean_path(path=f'{self.project_dir}/app/vectors')
         os.makedirs(self.vector_path, exist_ok=True)
         # Using OpenAI embeddings
         self.embedding = OpenAIEmbeddings(openai_api_key=self.get_env_variable(EnvKeys.APP_OPENAI_KEY.value), chunk_size=chunk_size)

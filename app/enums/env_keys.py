@@ -4,6 +4,8 @@ class EnvKeys(Enum):
     APP_HOST='APP_HOST'
     APP_PORT='APP_PORT'
     APP_ENVIRONMENT = "APP_ENVIRONMENT"
+    # FOLDERS
+    UPLOAD_DIR = 'UPLOAD_DIR'
     # URLs
     LOCAL_LLM_URL = 'LOCAL_LLM_URL'
     # LLM

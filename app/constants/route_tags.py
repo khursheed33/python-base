@@ -3,3 +3,5 @@ class RouteTags:
     DOCS = "Documentations"
     AUTH = "Authentication"
     TESTS = "API Testings"
+    
+    VECTOR_DB = "Vector Database"

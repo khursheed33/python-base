@@ -8,7 +8,7 @@ from langchain_community.document_loaders.word_document import Docx2txtLoader
 from langchain_community.document_loaders.web_base import WebBaseLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
-from app.utils.utility_manager import UtilityManager
+from app.utils.file_system import FileSystem
 
 class DocumentLoader:
     @staticmethod
@@ -36,7 +36,7 @@ class DocumentLoader:
 
     @staticmethod
     def get_loader(file_path: str) -> Optional[Union[TextLoader, WebBaseLoader]]:
-        cleaned_path = UtilityManager.clean_path(file_path)
+        cleaned_path = FileSystem().clean_path(path=file_path)
 
         if cleaned_path.startswith("http"):
             return WebBaseLoader(cleaned_path)

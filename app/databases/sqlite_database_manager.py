@@ -12,7 +12,7 @@ class SQLiteDBManager(UtilityManager):
         # super().__init__()
         project_dir = self.get_project_dir()
         db_path = f"{project_dir}/{self.get_env_variable(EnvKeys.SQLITE_DB_PATH.value)}"
-        db_path = self.clean_path(db_path)
+        db_path = self.clean_path(path=db_path)
         self.conn_params = {
             'database': db_path,
         }
