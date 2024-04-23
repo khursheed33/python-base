@@ -8,7 +8,7 @@ from fastapi import File, UploadFile
 from app.controllers.shared.shared_controller import SharedController
 from app.utils.utility_manager import UtilityManager
 from app.constants.constant_manager import ConstantManager
-from app.models.all_models import SearchInEmbeddingRequestModel
+from app.models.all_models import SearchInEmbeddingRequestModel, ResponseModel
 
 
 class SharedRouter(SharedController, UtilityManager):
@@ -20,19 +20,19 @@ class SharedRouter(SharedController, UtilityManager):
     def setup_routes(self):
         @self.router.post(RoutePaths.VECTOR_DOCS_UPLOAD, tags=[RouteTags.VECTOR_DB])
         @self.catch_api_exceptions
-        async def create_document_embeddings(files: List[UploadFile] = File(...)):
-            return self.create_embeddings(files=files)
+        async def create_document_embeddings(files: List[UploadFile] = File(...))->ResponseModel:
+            return await self.create_embeddings(files=files)
 
         @self.router.post(RoutePaths.VECTOR_DOCS_SEARCH, tags=[RouteTags.VECTOR_DB])
         @self.catch_api_exceptions
-        async def search_in_embeddings(request: SearchInEmbeddingRequestModel = Body(...)):
+        async def search_in_embeddings(request: SearchInEmbeddingRequestModel = Body(...))->ResponseModel:
             user_id = request.user_id if request.user_id != ConstantManager.STRING else None
             input = request.query
             collection_name = request.collection_name if request.collection_name != ConstantManager.STRING else None
             top_k = request.top_results
-            return self.search_in_embedding(input=input, collection_name=collection_name, top_k=top_k)
+            return  await self.search_in_embedding(input=input, collection_name=collection_name, top_k=top_k)
 
         @self.router.delete(RoutePaths.VECTOR_DOCS, tags=[RouteTags.VECTOR_DB],description="Default Collection Name: langchain")
         @self.catch_api_exceptions
-        async def delete_data_from_vector_collection(collection_name: str):
-            return self.delete_collection_embeddings(collection_name=collection_name)
+        async def delete_data_from_vector_collection(collection_name: str)->ResponseModel:
+            return await self.delete_collection_embeddings(collection_name=collection_name)
