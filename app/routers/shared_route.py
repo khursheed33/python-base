@@ -20,12 +20,12 @@ class SharedRouter(SharedController, UtilityManager):
     def setup_routes(self):
         @self.router.post(RoutePaths.VECTOR_DOCS_UPLOAD, tags=[RouteTags.VECTOR_DB])
         @self.catch_api_exceptions
-        async def create_document_embeddings(files: List[UploadFile] = File(...))->ResponseModel:
+        async def create_document_embeddings(collection_name:str = None,files: List[UploadFile] = File(...)) -> ResponseModel:
             return await self.create_embeddings(files=files)
 
         @self.router.post(RoutePaths.VECTOR_DOCS_SEARCH, tags=[RouteTags.VECTOR_DB])
         @self.catch_api_exceptions
-        async def search_in_embeddings(request: SearchInEmbeddingRequestModel = Body(...))->ResponseModel:
+        async def search_in_embeddings(request: SearchInEmbeddingRequestModel = Body(...)) -> ResponseModel:
             user_id = request.user_id if request.user_id != ConstantManager.STRING else None
             input = request.query
             collection_name = request.collection_name if request.collection_name != ConstantManager.STRING else None
@@ -34,5 +34,5 @@ class SharedRouter(SharedController, UtilityManager):
 
         @self.router.delete(RoutePaths.VECTOR_DOCS, tags=[RouteTags.VECTOR_DB],description="Default Collection Name: langchain")
         @self.catch_api_exceptions
-        async def delete_data_from_vector_collection(collection_name: str)->ResponseModel:
+        async def delete_data_from_vector_collection(collection_name: str) -> ResponseModel:
             return await self.delete_collection_embeddings(collection_name=collection_name)
