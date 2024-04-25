@@ -21,7 +21,7 @@ class SharedRouter(SharedController, UtilityManager):
         @self.router.post(RoutePaths.VECTOR_DOCS_UPLOAD, tags=[RouteTags.VECTOR_DB])
         @self.catch_api_exceptions
         async def create_document_embeddings(collection_name:str = None,files: List[UploadFile] = File(...)) -> ResponseModel:
-            return await self.create_embeddings(files=files)
+            return await self.create_embeddings(files=files,collection_name=collection_name)
 
         @self.router.post(RoutePaths.VECTOR_DOCS_SEARCH, tags=[RouteTags.VECTOR_DB])
         @self.catch_api_exceptions

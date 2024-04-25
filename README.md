@@ -36,9 +36,9 @@ Make sure you have the following software installed on your machine:
 
 To run the FastAPI server, execute the following command:
 
-```bash
-uvicorn app:app --host ${APP_HOST} --port ${APP_PORT} --reload
-
+   ```bash
+   uvicorn app:app --host ${APP_HOST} --port ${APP_PORT} --reload
+   ```
 
 ### Configuration
 
@@ -60,9 +60,9 @@ uvicorn app:app --host ${APP_HOST} --port ${APP_PORT} --reload
 
 To run the FastAPI server, execute the following command:
 
-```bash
-python app/main.py
-```
+   ```bash
+   python app/main.py
+   ```
 
 By default, the server will listen on `0.0.0.0:8000` (or as configured in the `.env` file).
 

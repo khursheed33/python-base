@@ -12,7 +12,7 @@ class FileUploadManager:
     def __init__(self) -> None:
         pass
     
-    async def upload(self, files: List[UploadFile]) -> ResponseModel:
+    async def upload(self, files: List[UploadFile]):
         env_manager = EnvManager()
         ALLOWED_EXTENSIONS = ast.literal_eval(env_manager.get_env_variable(EnvKeys.UPLOAD_ALLOWED_EXTENTIONS.value))
         upload_directory = f'{env_manager.get_env_variable(EnvKeys.UPLOAD_DIR.value)}/{get_current_timestamp_str()}'
@@ -27,4 +27,4 @@ class FileUploadManager:
             with open(file_path, "wb") as buffer:
                 shutil.copyfileobj(file.file, buffer)
             print(f"Uploaded file: {file.filename}")
-        return ResponseModel(message="Files uploaded successfully",status_code=ResponseModel.CREATED, data=[{"message": "Files uploaded successfully","status":ResponseModel.CREATED, "directory":upload_directory}])
+        return {"message":"Files uploaded successfully", "directory":upload_directory}

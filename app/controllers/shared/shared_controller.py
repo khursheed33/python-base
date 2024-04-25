@@ -11,15 +11,13 @@ class SharedController(UtilityManager):
         super().__init__()
         self.local_embedder = ChromaVectorStoreWithLocalEmbeddings()
 
-    async def create_embeddings(self, files: List[UploadFile]) -> ResponseModel:
+    async def create_embeddings(self, files: List[UploadFile], collection_name:str = None) -> ResponseModel:
         uploaded =await self.upload(files=files)
-        res_data = uploaded.data[0]
-        uploaded_dir = res_data.get('directory')
-        await self.local_embedder.create_embeddings(document_path=uploaded_dir)
-        
+        uploaded_dir = uploaded.get('directory')
+        await self.local_embedder.create_embeddings(document_path=uploaded_dir, collection_name=collection_name)
         # Delete the folder after processing
         shutil.rmtree(uploaded_dir)
-        return ResponseModel(message=uploaded.message,data=[res_data],status_code=uploaded.status_code )
+        return ResponseModel(message=uploaded.get('message'),status_code=ResponseModel.CREATED_201)
  
     async def search_in_embedding(self,input:str,top_k:int, collection_name:str='langchain') -> ResponseModel:
         result =  await self.local_embedder.search_in_vector(input=input, collection_name=collection_name,top_k=top_k)
