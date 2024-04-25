@@ -7,7 +7,6 @@ from app.constants.route_tags import RouteTags
 from app.utils.extract_data import extract_data
 from pathlib import Path
 import subprocess
-from datetime  import datetime
 import time
 from app.utils.file_system import FileSystem
 
@@ -32,7 +31,7 @@ class TestRouter():
                 elapsed = end - start
                 coverage_totals.update({'elapsed_time': elapsed})
                 # Delete coverage file after use
-                FileSystem.delete_file(file_path='coverage.json')
+                FileSystem().delete_file(file_path='coverage.json')
                 return coverage_totals
             except Exception as e:
                 print(f"Error: {e}")

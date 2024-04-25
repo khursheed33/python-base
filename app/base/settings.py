@@ -22,7 +22,7 @@ class Settings(UtilityManager):
             logging.getLogger().handlers.clear()
             # Ensure logs directory exists
             logs_dir = 'logs'
-            FileSystem.create_folder(logs_dir)
+            self.create_folder(logs_dir)
             
             logging.basicConfig(
                 handlers=[logging.handlers.RotatingFileHandler(

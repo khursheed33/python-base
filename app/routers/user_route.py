@@ -13,10 +13,12 @@ class UserRouter(UserController):
         self.setup_routes()
 
     def setup_routes(self):
-        @self.router.get(RoutePaths.USERS, tags=[RouteTags.USERS])  # Update the path to include the prefix
-        async def get_all_useres():
+        @self.router.get(RoutePaths.USERS, tags=[RouteTags.USERS])
+        @self.catch_api_exceptions
+        async def get_all_users():
             return self.get_all_users()
         
-        @self.router.post(RoutePaths.USERS, tags=[RouteTags.USERS])  # Update the path to include the prefix
+        @self.router.post(RoutePaths.USERS, tags=[RouteTags.USERS])
+        @self.catch_api_exceptions
         async def create_new_user(user: UserModel):
             return self.create_new_user(userModel=user)

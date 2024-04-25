@@ -3,13 +3,13 @@
 import uvicorn
 from fastapi import FastAPI, APIRouter
 from fastapi.staticfiles import StaticFiles
-from app.settings import Settings
+from app.base.settings import Settings
 from app.constants.route_paths import RoutePaths
 from app.constants.app_constants import AppConstants
 from app.base.router_registration import RouterRegistration
 from app.base.cors_config import InitCORS
 from app.constants.fast_api_constants import FastAPIConstants
-
+from app.constants.directory_names import DirectoryNames
 
 class App(RoutePaths):
     def __init__(self):
@@ -30,7 +30,7 @@ class App(RoutePaths):
 
     def setup_static_files(self):
         self.app.mount(RoutePaths.STATIC, StaticFiles(
-            directory="app/templates"), name=AppConstants.STATIC)
+            directory=DirectoryNames.TEMPLATES), name=AppConstants.STATIC)
 
     def setup_routes(self):
         RouterRegistration(app=self.app)

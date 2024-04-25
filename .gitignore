@@ -9,3 +9,7 @@ __pychache__
 coverage.json
 .pytest_cache
 **.db
+
+**/vectors
+**.db
+**/uploads
