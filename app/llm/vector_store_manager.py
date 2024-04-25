@@ -4,6 +4,7 @@ from app.enums.env_keys import EnvKeys
 from app.utils.utility_manager import UtilityManager
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain.document_loaders.text import TextLoader
+from app.constants.log_messages import LogMessages
 import glob
 
 class ChromaVectorStoreManager(UtilityManager):
@@ -17,7 +18,7 @@ class ChromaVectorStoreManager(UtilityManager):
         self.embedding = OpenAIEmbeddings(openai_api_key=self.get_env_variable(EnvKeys.APP_OPENAI_KEY.value), chunk_size=chunk_size)
         self.vectordb = Chroma(persist_directory=self.vector_path, 
                                embedding_function=self.embedding)
-        
+    
     def create_vector_store(self, document_path: str, collection_name:str='langchain',chunk_size: int = 2000, chunk_overlap: int = 200):
         """Create a vector store from all .txt files in a directory."""
         try:
@@ -34,10 +35,10 @@ class ChromaVectorStoreManager(UtilityManager):
                                                      persist_directory=self.vector_path,
                                                      )
             chroma_db.persist()
-            print('---Vector-Store-Created---')
+            print(LogMessages.VECTOR_CREATED)
         
         except Exception as e:
-            print(f"Error creating vector store: {e}")
+            print(LogMessages.CREATE_VECTOR_ERROR.format(e))
     
     def search_in_vector(self, user_question: str, top_k: int = 3,collection_name:str='langchain'):
         """Search for similar documents in the vector store based on a user question."""
@@ -47,5 +48,5 @@ class ChromaVectorStoreManager(UtilityManager):
             return system_answer
         
         except Exception as e:
-            print(f"Error searching in vector store: {e}")
+            print(LogMessages.SEARCH_IN_VECTOR_ERROR.format(e))
             return None

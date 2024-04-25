@@ -3,7 +3,6 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores.chroma import Chroma
 from app.utils.utility_manager import UtilityManager
 
-
 class ChromaVectorStoreWithLocalEmbeddings(UtilityManager):
     error_logger = UtilityManager()
     def __init__(self):
