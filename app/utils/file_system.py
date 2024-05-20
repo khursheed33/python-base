@@ -1,5 +1,6 @@
 import os
 import shutil
+from pathlib import Path
 
 class FileSystem:
     def __init__(self) -> None:
@@ -61,3 +62,13 @@ class FileSystem:
         except Exception as e:
             print(f"Error deleting folder '{folder_path}': {e}")
             return False
+        
+        import os
+
+
+    def get_file_location(self, folder_name): 
+        base_upload_path = str(os.environ.get("UPLOAD_DIR"))
+        upload_location = Path(base_upload_path +"/"+ folder_name)
+        Path(upload_location).mkdir(parents=True, exist_ok=True)
+        return upload_location
+
