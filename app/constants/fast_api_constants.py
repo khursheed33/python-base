@@ -27,3 +27,14 @@ Welcome to the Python Base Server with FastAPI! This base server is designed to 
         "name": "Apache 2.0",
         "url": "https://www.apache.org/licenses/LICENSE-2.0.html",
     }
+
+    OPENAPI_TAGS_METADATA = [
+    {
+        "name": "API Testings",
+        "description": "Provides a route to run tests at deployment time."
+    },
+    {
+        "name": "Authentication",
+        "description": "Authentication and Authorization of Users"
+    }
+]

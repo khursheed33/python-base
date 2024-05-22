@@ -13,26 +13,33 @@ class Settings(UtilityManager):
     def __init__(self):
         super().__init__()
         try:
-            load_dotenv(".env.example")
+            loaded = load_dotenv(".env")
+            print("Env-Loaded:",loaded)
             self.APP_HOST = self.get_env_variable(EnvKeys.APP_HOST.value)
             self.APP_PORT = int(self.get_env_variable(EnvKeys.APP_PORT.value))
             self.APP_ENVIRONMENT =  self.get_env_variable(EnvKeys.APP_ENVIRONMENT.value)
             fmt =  self.get_env_variable(EnvKeys.APP_LOGGING_FORMATTER.value)
             level =  self.get_env_variable(EnvKeys.APP_LOGGING_LEVEL.value)
+            log_folder =  self.get_env_variable(EnvKeys.APP_LOGGING_FOLDER.value)
+            log_file = self.get_env_variable(EnvKeys.LOG_FILE.value)
+            max_byte = int( self.get_env_variable(EnvKeys.APP_LOGGING_MAXBYTES.value))
+            backup_count = int( self.get_env_variable(EnvKeys.APP_LOGGING_BACKUPCOUNT.value))
+            date_format = self.get_env_variable(EnvKeys.APP_LOGGING_DATEFORMAT.value)
+            log_file_path = f'{log_folder}/{log_file}'
             logging.getLogger().handlers.clear()
             # Ensure logs directory exists
-            logs_dir = 'logs'
-            self.create_folder(logs_dir)
+           
+            self.create_folder(log_folder)
             
             logging.basicConfig(
                 handlers=[logging.handlers.RotatingFileHandler(
-                     self.get_env_variable(EnvKeys.APP_LOGGING_FILE.value),
-                    maxBytes=int( self.get_env_variable(EnvKeys.APP_LOGGING_MAXBYTES.value)),
-                    backupCount=int( self.get_env_variable(EnvKeys.APP_LOGGING_BACKUPCOUNT.value)))  
+                     log_file_path,
+                    maxBytes=max_byte,
+                    backupCount=backup_count)  
                 ],
                 level=level,
                 format=fmt,
-                datefmt= self.get_env_variable(EnvKeys.APP_LOGGING_DATEFORMAT.value)
+                datefmt= date_format,
             )
             # set up logging to console
             console = logging.StreamHandler()
