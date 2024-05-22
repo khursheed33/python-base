@@ -1,10 +1,10 @@
 import os,re
 from langchain_community.chat_models import ChatOpenAI
-from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationChain, LLMChain
 from langchain.output_parsers import StructuredOutputParser
 from langchain.prompts import PromptTemplate
 from langchain_community.embeddings import OpenAIEmbeddings
+from app.llm.user_conversation_memory import UserConversationMemory
 from app.utils.utility_manager import UtilityManager
 from app.enums.env_keys import EnvKeys
 
@@ -28,16 +28,17 @@ class LangchainOpenAIManager(UtilityManager):
         self.embedding = OpenAIEmbeddings(openai_api_key=self.OPENAI_KEY, chunk_size=2000)
 
         
-        self.conversation_memory:ConversationBufferMemory = ConversationBufferMemory(
-            llm=self.llm_model,)
 
-        self.conversation_chain:ConversationChain = ConversationChain(
-            llm=self.llm_model, memory=self.conversation_memory, verbose=self.OPENAI_VERBOSE)
 
     def run_conversational_chain(self, prompt: str, output_parser: StructuredOutputParser = None, dont_store:bool = False) -> dict:
         """
         This LLM chain has memory, Chats will be stored by default.
         """
+        self.conversation_memory = UserConversationMemory(
+            llm=self.llm_model,)
+
+        self.conversation_chain:ConversationChain = ConversationChain(
+            llm=self.llm_model, memory=self.conversation_memory, verbose=self.OPENAI_VERBOSE)
         response = self.conversation_chain.predict(input=prompt)
         if output_parser:
             response = output_parser.parse(response)
