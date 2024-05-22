@@ -25,6 +25,7 @@ class Settings(UtilityManager):
             max_byte = int( self.get_env_variable(EnvKeys.APP_LOGGING_MAXBYTES.value))
             backup_count = int( self.get_env_variable(EnvKeys.APP_LOGGING_BACKUPCOUNT.value))
             date_format = self.get_env_variable(EnvKeys.APP_LOGGING_DATEFORMAT.value)
+          
             log_file_path = f'{log_folder}/{log_file}'
             logging.getLogger().handlers.clear()
             # Ensure logs directory exists
