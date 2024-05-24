@@ -17,8 +17,9 @@ class LangchainOpenAIManager(UtilityManager):
         self.TEMPERATURE = self.get_env_variable(EnvKeys.APP_OPENAI_TEMPERATURE.value)
         self.MODEL = self.get_env_variable(EnvKeys.APP_OPENAI_MODEL.value)
         self.OPENAI_VERBOSE = self.get_env_variable(EnvKeys.APP_OPENAI_VERBOSE.value)
+        self.OPENAI_APIKEY = self.get_env_variable(EnvKeys.OPENAI_API_KEY.value)
         
-        os.environ["OPENAI_API_KEY"] = self.OPENAI_KEY
+        self.set_env_variable(key=self.OPENAI_APIKEY, value=self.OPENAI_KEY)
         
         self.llm_model = ChatOpenAI(
             model_name=self.MODEL,
