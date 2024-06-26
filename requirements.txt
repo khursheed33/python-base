@@ -31,3 +31,7 @@ docx2txt==0.8
 # AWS
 boto3==1.34.85
 botocore==1.34.85
+
+neo4j-genai>=0.2.0
+torch>=2.3.1
+neo4j>=5.21.0
