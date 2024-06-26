@@ -28,9 +28,6 @@ class LangchainOpenAIManager(UtilityManager):
 
         self.embedding = OpenAIEmbeddings(openai_api_key=self.OPENAI_KEY, chunk_size=2000)
 
-        
-
-
     def run_conversational_chain(self, prompt: str, output_parser: StructuredOutputParser = None, dont_store:bool = False) -> dict:
         """
         This LLM chain has memory, Chats will be stored by default.
