@@ -31,3 +31,7 @@ docx2txt==0.8
 # AWS
 boto3==1.34.85
 botocore==1.34.85
+
+# Authentication
+python-keycloak==4.0.0
+fastapi-keycloak==1.0.11
