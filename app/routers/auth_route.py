@@ -5,9 +5,10 @@ from app.models.auth_models import LoginModel
 from app.models.response_model import ResponseModel
 from app.utils.utility_manager import UtilityManager
 from app.controllers.auth.auth_controller import AuthController
+from app.controllers.auth.azure_ad_auth_controller import AzureADAuthController
 from app.constants.app_messages import AppMessages
 
-class AuthenticationRouter(AuthController, UtilityManager):
+class AuthenticationRouter(AzureADAuthController, UtilityManager):
     def __init__(self):
         super().__init__()
         self.router = APIRouter(prefix=RoutePaths.API_PREFIX)
