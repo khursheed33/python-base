@@ -1,38 +1,53 @@
 import os,re
-from langchain_community.chat_models import ChatOpenAI
+from typing import Any
+from langchain_community.chat_models import  AzureChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationChain, LLMChain
 from langchain.output_parsers import StructuredOutputParser
 from langchain.prompts import PromptTemplate
-from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_community.embeddings import  AzureOpenAIEmbeddings
 from app.utils.utility_manager import UtilityManager
 from app.enums.env_keys import EnvKeys
 
 
 class LangchainOpenAIManager(UtilityManager):
-    def __init__(self):
+    def __init__(
+        self,STOP:Any = None, 
+        MAX_RETRY:int = 1,
+        MAX_TOKENS: int = -1,
+        ):
         super().__init__()
         
-        self.OPENAI_KEY = self.get_env_variable(EnvKeys.APP_OPENAI_KEY.value)
-        self.TEMPERATURE = self.get_env_variable(EnvKeys.APP_OPENAI_TEMPERATURE.value)
-        self.MODEL = self.get_env_variable(EnvKeys.APP_OPENAI_MODEL.value)
-        self.OPENAI_VERBOSE = self.get_env_variable(EnvKeys.APP_OPENAI_VERBOSE.value)
+        self.AZURE_OPENAI_KEY = self.get_env_variable(EnvKeys.AZURE_OPENAI_KEY.value)
+        self.AZURE_TEMPERATURE = self.get_env_variable(EnvKeys.AZURE_OPENAI_TEMPERATURE.value)
+        self.AZURE_MODEL = self.get_env_variable(EnvKeys.AZURE_OPENAI_MODEL.value)
+        self.AZURE_BASE_URL = self.get_env_variable(EnvKeys.AZURE_OPENAI_BASE_URL.value)
+        self.AZURE_DEPLOYMENT = self.get_env_variable(EnvKeys.AZURE_OPENAI_DEPLOYMENT.value)
+        self.AZURE_VERSION = self.get_env_variable(EnvKeys.AZURE_OPENAI_API_VERSION.value)
+        self.STOP = STOP
+        self.MAX_RETRY = MAX_RETRY
+        self.MAX_TOKENS = MAX_TOKENS
         
-        os.environ["OPENAI_API_KEY"] = self.OPENAI_KEY
+        os.environ["OPENAI_API_KEY"] = self.AZURE_OPENAI_KEY
         
-        self.llm_model = ChatOpenAI(
-            model_name=self.MODEL,
-            temperature=self.TEMPERATURE
+        self.llm_model = AzureChatOpenAI(
+            model_name=self.AZURE_MODEL,
+            temperature=self.AZURE_TEMPERATURE,
+            api_key=self.AZURE_OPENAI_KEY,
+            api_version=self.AZURE_VERSION,
+            azure_deployment=self.AZURE_DEPLOYMENT,
+            azure_endpoint=self.AZURE_BASE_URL,
+            stop=self.STOP,
         )
 
-        self.embedding = OpenAIEmbeddings(openai_api_key=self.OPENAI_KEY, chunk_size=2000)
+        # self.embedding = AzureOpenAIEmbeddings(openai_api_key=self.AZURE_OPENAI_KEY, chunk_size=2000)
 
         
         self.conversation_memory:ConversationBufferMemory = ConversationBufferMemory(
             llm=self.llm_model,)
 
         self.conversation_chain:ConversationChain = ConversationChain(
-            llm=self.llm_model, memory=self.conversation_memory, verbose=self.OPENAI_VERBOSE)
+            llm=self.llm_model, memory=self.conversation_memory)
 
     def run_conversational_chain(self, prompt: str, output_parser: StructuredOutputParser = None, dont_store:bool = False) -> dict:
         """
