@@ -1,0 +1,63 @@
+from typing import List
+from app.databases.postgres_database_manager import PostgreSQLManager
+from app.enums.env_keys import EnvKeys
+from app.utils.utility_manager import UtilityManager
+from langchain_core.documents import Document
+from langchain.vectorstores.pgvector import PGVector
+from langchain.embeddings.azure_openai import AzureOpenAIEmbeddings
+
+class PGVectorEmbeddings(UtilityManager):
+    def __init__(self):
+        super().__init__()
+        self.__KEY = self.get_env_variable(EnvKeys.AZURE_EMBEDDING_KEY.value)
+        self.__VERSION = self.get_env_variable(EnvKeys.AZURE_EMBEDDING_VERSION.value)
+        self.__DEPLOYMENT = self.get_env_variable(EnvKeys.AZURE_EMBEDDING_DEPLOYMENT.value)
+        self.__MODEL = self.get_env_variable(EnvKeys.AZURE_EMBEDDING_MODEL.value)
+        self.__URL = self.get_env_variable(EnvKeys.AZURE_EMBEDDING_BASE_URL.value)
+        
+        self.__PG_HOST = self.get_env_variable(EnvKeys.POSTGRES_DB_HOST.value)
+        self.__PG_PORT = self.get_env_variable(EnvKeys.POSTGRES_DB_PORT.value)
+        self.__PG_USERNAME = self.get_env_variable(EnvKeys.POSTGRES_DB_USER.value)
+        self.__PG_PASSWORD = self.get_env_variable(EnvKeys.POSTGRES_DB_PASSWORD.value)
+        self.__PG_DATABASE = self.get_env_variable(EnvKeys.POSTGRES_DB_NAME.value)
+        
+        self.__CONNECTION_STRING = f"postgresql://{self.__PG_USERNAME}:{self.__PG_PASSWORD}@{self.__PG_HOST}:{self.__PG_PORT}/{self.__PG_DATABASE}"
+        
+        self.__EMBEDDINGS = AzureOpenAIEmbeddings(
+            openai_api_key=self.__KEY,
+            azure_deployment=self.__DEPLOYMENT,
+            azure_endpoint=self.__URL,
+            api_version=self.__VERSION,
+            model=self.__MODEL,
+        )
+        self.__POSTGRES_DB = PostgreSQLManager()
+        
+    def get_pgvector(self, collection_name:str = 'vectorstore') -> PGVector:
+        vectorstore = PGVector(
+            embedding_function=self.__EMBEDDINGS,
+            collection_name=collection_name,
+            connection_string=self.__CONNECTION_STRING,
+        )
+        return vectorstore
+    
+    def create_vector_embeddings(self, docs: List[Document], collection_name:str = 'vectorstore') -> dict:
+            result = self.get_pgvector().from_documents(
+                embedding=self.__EMBEDDINGS,
+                documents=docs,
+                collection_name=collection_name,
+                connection_string=self.__CONNECTION_STRING,
+            )
+            if result:
+                return {"message": f"Embedding created successfully for: {collection_name}"}
+            else:
+                return {"error": "something went wrong!"}
+    
+    def search_in_vector(self, query:str, collection_name:str = 'vectorstore',k:int = 3) -> dict:
+        result = self.__POSTGRES_DB.search_in_embeddings(query=query, top_k=k, collection_name=collection_name)
+        return {"message": "Search Successful!", "result":result}
+    
+    def delete_vector(self, collection_name:str) -> dict:
+        self.__POSTGRES_DB.delete_embeddings(collection_id=collection_name)
+        return {"message": "Collection and embeddings deleted!"}
+    
+        
