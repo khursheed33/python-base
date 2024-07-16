@@ -36,5 +36,17 @@ Welcome to the Python Base Server with FastAPI! This base server is designed to 
     {
         "name": "Authentication",
         "description": "Authentication and Authorization of Users"
-    }
+    },
+    {
+        "name": "Health",
+        "description": "Check health of the server"
+    },
+    {
+        "name": "Ingestion",
+        "description": "Manager Vector Embeddings: Create, Search and Delete"
+    },
+    {
+        "name": "Chat",
+        "description": "Chat with the ingested document"
+    },
 ]

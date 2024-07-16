@@ -13,3 +13,7 @@ class RoutePaths:
     VECTOR_DOCS_UPLOAD = "/docs/upload"
     VECTOR_DOCS_SEARCH = "/docs/search"
     VECTOR_DOCS = "/docs"
+    
+    INGEST = "/ingest"
+    INGEST_SEARCH = "/ingest/search"
+    CHAT = "/chat"
