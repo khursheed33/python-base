@@ -21,6 +21,7 @@ class App(RoutePaths):
             terms_of_service=FastAPIConstants.T_N_C,
             contact=FastAPIConstants.CONTACT,
             license_info=FastAPIConstants.LICENSE_INFO,
+            openapi_tags=FastAPIConstants.OPENAPI_TAGS_METADATA,
         )
         self.settings = Settings()
         self.base_router = APIRouter(prefix=self.API_PREFIX)

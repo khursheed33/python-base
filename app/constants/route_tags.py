@@ -5,3 +5,6 @@ class RouteTags:
     TESTS = "API Testings"
     
     VECTOR_DB = "Vector Database"
+    INGESTION = "Ingestion"
+    INGESTION_SEARCH = "Search in the ingested docs"
+    CHAT = "Chat"
