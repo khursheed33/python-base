@@ -40,31 +40,53 @@ class PostgreSQLManager(UtilityManager):
             logging.error("Error executing query:", e)
             return None
 
-    def delete_embeddings(self, collection_id:str = 'vectorstore'):
+    def find_collection(self, collection_id: str = 'vectorstore'):
         try:
+            __findcollection_query = "SELECT * FROM langchain_pg_collection WHERE name = %s"
+            found_collection, headers = self._execute_query(__findcollection_query, (collection_id,), return_headers=True)
+            if found_collection:
+                result_dict = [dict(zip(headers, row)) for row in found_collection]
+                return result_dict
+            else:
+                return []
+        except Exception as e:
+            tb = traceback.format_exc()
+            logging.info(f"Traceback : {tb}")
+            logging.error(f"exception in find_collection : {e}")
+            return {"error": str(e)}
+
+    def delete_embeddings(self, collection_id: str = 'vectorstore'):
+        try:
+            collection = self.find_collection(collection_id=collection_id)
+            collection_id = collection[0]['uuid']
             delete_collection_query = "DELETE FROM langchain_pg_collection WHERE uuid = %s"
             delete_embedding_query = "DELETE FROM langchain_pg_embedding WHERE collection_id = %s"
             self._execute_query(delete_collection_query, (collection_id,))
             self._execute_query(delete_embedding_query, (collection_id,))
-            return "Deleted successfully!"
+            return {"status": "Deleted successfully!"}
         except Exception as e:
             tb = traceback.format_exc()
             logging.info(f"Traceback : {tb}")
             logging.error(f"exception in delete_embeddings : {e}")
+            return {"error": str(e)}
 
-    def search_in_embeddings(self, query:str, collection_name:str, top_k=5):
+    def search_in_embeddings(self, query: str, collection_uuid: str, top_k=4):
         try:
-            sql_query = f'''
+            sql_query = '''
                 SELECT document FROM langchain_pg_embedding  
                 WHERE collection_id = %s
                 ORDER BY embedding <=> %s 
                 LIMIT %s;
             '''
-            params = (collection_name, query, top_k)
-            results = self._execute_query(sql_query, params)
-            return results       
+            params = (collection_uuid, query, top_k)
+            results, headers = self._execute_query(sql_query, params, return_headers=True)
+            if results:
+                result_dict = [dict(zip(headers, row)) for row in results]
+                return result_dict
+            else:
+                return []
         except Exception as e:
             tb = traceback.format_exc()
             logging.info(f"Traceback : {tb}")
             logging.error(f"exception in search_in_embeddings : {e}")
-
+            return {"error": str(e)}

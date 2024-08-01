@@ -1,8 +1,6 @@
-import json
 import logging
-from typing import List
+from typing import Dict, List
 
-from fastapi import HTTPException
 from app.databases.postgres_database_manager import PostgreSQLManager
 from app.enums.env_keys import EnvKeys
 from app.utils.utility_manager import UtilityManager
@@ -36,16 +34,16 @@ class PGVectorEmbeddings(UtilityManager):
         )
         self.__POSTGRES_DB = PostgreSQLManager()
         
-    def get_pgvector(self) -> PGVector:
+    def get_pgvector(self, collection_name:str = 'vectorstore') -> PGVector:
         vectorstore = PGVector(
             embedding_function=self.__EMBEDDINGS,
-            collection_name='vectorstore',
+            collection_name=collection_name,
             connection_string=self.__CONNECTION_STRING,
         )
         return vectorstore
     
     def create_vector_embeddings(self, docs: List[Document], collection_name:str = 'vectorstore') -> dict:
-            result = self.get_pgvector().from_documents(
+            result = self.get_pgvector(collection_name=collection_name).from_documents(
                 embedding=self.__EMBEDDINGS,
                 documents=docs,
                 collection_name=collection_name,
@@ -56,27 +54,19 @@ class PGVectorEmbeddings(UtilityManager):
             else:
                 return {"error": "something went wrong!"}
     
-    def search_in_vector(self, query:str, top_k:int = 3) -> dict:
+    def search_in_vector(self, query:str, top_k:int = 5, collection_name:str = 'vectorstore', filters:Dict = {}) -> dict:
         try:
             # If collection found then search
-            vector_collection = self.get_pgvector()
-            docs = vector_collection.similarity_search(query=query, k=top_k)
-            formatted_documents = []
-            for doc in docs:
-                content = doc.page_content.strip()
-                source = doc.metadata.get('source', 'Unknown Source')
-                page = doc.metadata.get('page', 'Unknown Page')
-
-                formatted_doc = f"Content:\n{content}\nSource: {source}\nPage: {page}\n"
-                formatted_documents.append(formatted_doc)
-            return formatted_documents
+            vector_collection = self.get_pgvector(collection_name=collection_name)
+            docs = vector_collection.similarity_search(query=query, k=top_k, collection_name=collection_name, filter=filters)
+            return docs
         except Exception as e:
             logging.error(msg=f"Something went wrong! {str(e)}")
             print("Embedding: ", str(e))
             return []
     
     def delete_vector(self, collection_name:str) -> dict:
-        self.__POSTGRES_DB.delete_embeddings()
+        self.__POSTGRES_DB.delete_embeddings(collection_id=collection_name)
         return {"message": "Collection and embeddings deleted!"}
     
         
