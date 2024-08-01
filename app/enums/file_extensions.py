@@ -7,3 +7,5 @@ class FileExtensions(Enum):
     HTM = '.htm'
     TXT = '.txt'
     CSV = '.csv'
+    XLSX = '.xlsx'
+    XLS = '.xls'
