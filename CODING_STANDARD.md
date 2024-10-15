@@ -18,6 +18,7 @@
 10. [Service Layer](#service-layer)
 11. [Routing](#routing)
 12. [Testing](#testing)
+13. [Git](#git)
 
 ---
 
@@ -1750,3 +1751,317 @@ echo "Starting FastAPI app..."
 uvicorn main:app --reload
 ```
 
+### **1. Creating a Git Repository**
+
+A Git repository is a storage space where your project’s files and history are kept.
+
+- **Initialize a Git Repository:**
+  ```bash
+  git init
+  ```
+  This creates a new Git repository in your current directory, setting up the `.git` folder.
+
+- **Clone an Existing Repository:**
+  ```bash
+  git clone <repository-url>
+  ```
+  Example:
+  ```bash
+  git clone https://github.com/user/repo.git
+  ```
+  This downloads a copy of a remote repository to your local machine.
+
+---
+
+### **2. Staging and Committing Changes**
+
+Once you've made changes to files, you can track them with the following steps:
+
+- **Check the status of your repository:**
+  ```bash
+  git status
+  ```
+  This command shows the current state of your working directory and staging area (modified, added, or deleted files).
+
+- **Add files to the staging area:**
+  ```bash
+  git add <file-name>
+  ```
+  To add all files at once:
+  ```bash
+  git add .
+  ```
+
+- **Commit staged changes:**
+  ```bash
+  git commit -m "Meaningful commit message"
+  ```
+
+- **Amend the last commit (if you forgot something):**
+  ```bash
+  git commit --amend
+  ```
+
+- **Viewing commit history:**
+  ```bash
+  git log
+  ```
+
+---
+
+### **3. Branching and Merging**
+
+Branches allow you to work on different features or bug fixes without affecting the main codebase.
+
+- **Create a new branch:**
+  ```bash
+  git checkout -b <branch-name>
+  ```
+  This creates and switches to the new branch.
+
+- **List all branches:**
+  ```bash
+  git branch
+  ```
+
+- **Switch to a different branch:**
+  ```bash
+  git checkout <branch-name>
+  ```
+
+- **Merge a branch into the current branch:**
+  ```bash
+  git merge <branch-name>
+  ```
+
+- **Delete a branch after merging:**
+  ```bash
+  git branch -d <branch-name>
+  ```
+
+- **Rebasing a branch (to reapply commits on top of another base commit):**
+  ```bash
+  git rebase <branch-name>
+  ```
+
+---
+
+### **4. Working with Remote Repositories**
+
+Remote repositories allow teams to collaborate by pushing and pulling code.
+
+- **View remote repositories:**
+  ```bash
+  git remote -v
+  ```
+
+- **Add a remote repository:**
+  ```bash
+  git remote add origin <remote-url>
+  ```
+
+- **Push changes to the remote repository:**
+  ```bash
+  git push origin <branch-name>
+  ```
+
+- **Pull changes from the remote repository:**
+  ```bash
+  git pull origin <branch-name>
+  ```
+
+---
+
+### **5. Resolving Conflicts**
+
+When working in teams, conflicts may occur during merges or pulls. Git helps resolve them.
+
+- **Find conflicting files:**
+  During a merge or pull, Git will highlight files with conflicts in the terminal and will mark conflict sections in the files like this:
+  ```
+  <<<<<<< HEAD
+  Your changes
+  =======
+  Other branch changes
+  >>>>>>> branch-name
+  ```
+
+- **Manually resolve conflicts in the files, then add the resolved file:**
+  ```bash
+  git add <conflicted-file>
+  ```
+
+- **Complete the merge or pull after resolving:**
+  ```bash
+  git commit
+  ```
+
+---
+
+### **6. Undoing Changes**
+
+- **Unstage files (remove them from the staging area but keep changes):**
+  ```bash
+  git reset <file-name>
+  ```
+
+- **Undo local changes to a file:**
+  ```bash
+  git checkout -- <file-name>
+  ```
+
+- **Revert a specific commit (without deleting it from history):**
+  ```bash
+  git revert <commit-hash>
+  ```
+
+- **Reset to a specific commit (deletes all changes after that commit):**
+  ```bash
+  git reset --hard <commit-hash>
+  ```
+
+---
+
+### **7. Stashing Changes**
+
+Stashing allows you to save changes temporarily without committing them, which is useful when switching branches.
+
+- **Save your uncommitted changes:**
+  ```bash
+  git stash
+  ```
+
+- **Apply stashed changes:**
+  ```bash
+  git stash apply
+  ```
+
+- **List stashes:**
+  ```bash
+  git stash list
+  ```
+
+- **Drop (delete) a stash:**
+  ```bash
+  git stash drop
+  ```
+
+---
+
+### **8. Tagging**
+
+Tags are useful for marking specific points in your project’s history, such as releases.
+
+- **Create a lightweight tag:**
+  ```bash
+  git tag <tag-name>
+  ```
+
+- **Create an annotated tag (with additional information):**
+  ```bash
+  git tag -a <tag-name> -m "Tag message"
+  ```
+
+- **Push tags to the remote repository:**
+  ```bash
+  git push origin <tag-name>
+  ```
+
+- **View all tags:**
+  ```bash
+  git tag
+  ```
+
+---
+
+### **9. Viewing and Comparing Changes**
+
+- **View changes in a file:**
+  ```bash
+  git diff <file-name>
+  ```
+
+- **Compare branches:**
+  ```bash
+  git diff <branch-1>..<branch-2>
+  ```
+
+---
+
+### **10. Git Aliases (Shortcuts)**
+
+To make Git commands easier, you can define aliases for frequently used commands.
+
+- **Create an alias for a command:**
+  ```bash
+  git config --global alias.<alias-name> '<git-command>'
+  ```
+  Example:
+  ```bash
+  git config --global alias.co 'checkout'
+  git config --global alias.br 'branch'
+  ```
+
+---
+
+### **11. Naming Conventions for Branches, Commits, and Tags**
+
+A clear and consistent naming convention improves the readability and organization of your project.
+
+- **Branch Naming Convention:**
+  - **Feature branches:** `feature/<description>` (e.g., `feature/add-user-auth`)
+  - **Bugfix branches:** `bugfix/<description>` (e.g., `bugfix/fix-login-error`)
+  - **Hotfix branches:** `hotfix/<description>` (e.g., `hotfix/critical-bug`)
+  - **Release branches:** `release/<version>` (e.g., `release/1.0.0`)
+
+  **Why?** This structure helps identify the purpose of a branch easily.
+
+- **Commit Message Convention:**
+  Follow the format: `<type>(<scope>): <subject>`
+
+  Common types include:
+  - **feat:** Introduces a new feature (e.g., `feat(auth): add login functionality`)
+  - **fix:** Fixes a bug (e.g., `fix(auth): resolve login redirect issue`)
+  - **docs:** Documentation changes (e.g., `docs(readme): update installation guide`)
+  - **style:** Code formatting (e.g., `style: reformat code according to PEP8`)
+  - **refactor:** Refactoring code without changing functionality (e.g., `refactor(auth): streamline token handling`)
+
+  **Why?** This helps in understanding what changes a commit introduces.
+
+- **Tag Naming Convention:**
+  - **Semantic versioning (recommended):** `v<major>.<minor>.<patch>` (e.g., `v1.0.0`, `v2.1.3`)
+
+  **Why?** Version tags help with release management and identify specific project versions.
+
+---
+
+### **12. Collaboration Best Practices**
+
+- **Forking and Pull Requests:**
+  When working on a shared repository, it's a good practice to fork the repository and work on your own copy, then create pull requests to propose changes.
+
+- **Code Review:**
+  Before merging code, ensure it is reviewed by another team member to catch bugs and maintain code quality.
+
+- **Squashing Commits:**
+  Before merging, it can be helpful to squash commits to clean up history.
+  ```bash
+  git rebase -i HEAD~<number-of-commits>
+  ```
+
+- **Pull frequently from the main branch:**
+  Keep your branch updated with the latest changes from the main branch:
+  ```bash
+  git pull origin main
+  ```
+
+---
+
+### **13. Git Hooks**
+
+Git hooks are scripts that run automatically at specific points in the Git workflow. They are helpful for enforcing code standards or running tests.
+
+- **Pre-commit Hook:**
+  This hook runs before a commit is made. You can use it to check for code style, run tests, etc.
+  - Create a `pre-commit` file in the `.git/hooks/` directory.
+  - Add commands like running linters or tests inside this file.
