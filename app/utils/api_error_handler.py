@@ -2,7 +2,7 @@ import logging
 from functools import wraps
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
-from app.models.all_models import ResponseModel
+from app.models.response_model import ResponseModel
 
 class CatchAPIException:
     def __init__(self) -> None:

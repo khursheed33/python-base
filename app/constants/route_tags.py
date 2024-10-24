@@ -1,4 +1,5 @@
 class RouteTags:
+    PING = "PING"
     USERS = "Users"
     DOCS = "Documentations"
     AUTH = "Authentication"

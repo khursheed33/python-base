@@ -4,7 +4,8 @@ from fastapi import APIRouter
 from app.constants.route_paths import RoutePaths
 from app.constants.route_tags import RouteTags
 
-class ApiTestRouter():
+
+class HealthRouter():
     def __init__(self):
         self.router = APIRouter()
         self.setup_routes()
