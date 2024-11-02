@@ -10,7 +10,7 @@ Follow these instructions to set up and run the project on your local machine.
 
 Make sure you have the following software installed on your machine:
 
-- Python 3.7+
+- Python 3.10+
 - pip (Python package manager)
 
 ### Installation
