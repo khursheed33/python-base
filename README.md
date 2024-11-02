@@ -18,7 +18,7 @@ Make sure you have the following software installed on your machine:
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/yourusername/fastapi-project-template.git
+   git clone https://github.com/khursheed33/python-base.git
    ```
 
 2. Navigate to the project directory:
