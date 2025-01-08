@@ -21,15 +21,19 @@ coverage==7.4.4
 # pgvector==0.3.1
 # redis==5.0.7
 # LLM
-openai==1.12.0
-langchain-community==0.0.22
-langchain==0.1.9
-langchain_experimental==0.0.52
-tiktoken==0.6.0
+# openai==1.12.0
+langchain==0.3.14
+langchain-core==0.3.29
+langchain-community==0.3.14
+langchain-experimental==0.3.4
+# tiktoken==0.6.0
+langgraph==0.2.61
+groq==0.13.1
+langchain-groq==0.2.3
+# langchain-openai==0.0.7
 # This library takes longer time to install.
 # sentence_transformers==2.3.1
-langchain-openai==0.0.7
-unstructured==0.13.3
+# unstructured==0.13.3
 # docx2txt==0.8
 # groq==0.8.0
 # AWS
@@ -41,6 +45,20 @@ unstructured==0.13.3
 # fastapi-keycloak==1.0.11
 
 # Document
-pdfplumber==0.11.2
-openpyxl==3.1.5
-xlrd==2.0.1
+# pdfplumber==0.11.2
+# openpyxl==3.1.5
+# xlrd==2.0.1
+
+# LLM Training 
+# python-dotenv>=1.0.1
+# wandb>=0.19.1
+# torch>=2.0.0
+# transformers>=4.28.0
+# datasets>=2.12.0
+# peft>=0.4.0
+# trl>=0.4.0
+# huggingface_hub>=0.14.1
+# bitsandbytes>=0.39.0
+# accelerate>=0.19.0
+# tensorboard>=2.12.0
+# git+https://github.com/huggingface/peft.git  # To ensure latest PEFT version is used

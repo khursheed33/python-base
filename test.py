@@ -1,25 +1,37 @@
-# from app.databases.sqlite_database_manager import SQLiteDBManager
+import requests
+from concurrent.futures import ThreadPoolExecutor
 
-# db_managaer = SQLiteDBManager()
-# query = """
-# SELECT * FROM users;
-# """
-# result = db_managaer._execute_query(query=query)
+def get_embedding(text):
+    url = 'http://localhost:11434/api/embeddings'
+    payload = {
+        'model': 'nomic-embed-text',
+        'prompt': text
+    }
+    response = requests.post(url, json=payload)
+    return response.json()
 
-# print(result)
+def get_chat_response(prompt):
+    url = 'http://localhost:11434/api/chat'
+    payload = {
+        'model': 'llama3.2:1b',
+        'prompt': prompt
+    }
+    response = requests.post(url, json=payload)
+    return response.json()
 
+def main():
+    text = "Your text here"
+    prompt = "Hello, how can I assist you today?"
 
-# from app.databases.postgres_database_manager import PostgreSQLManager
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        embedding_future = executor.submit(get_embedding, text)
+        chat_future = executor.submit(get_chat_response, prompt)
 
-# db_managaer = PostgreSQLManager()
-# print("isntance:", db_managaer)
-# query = """
-# SELECT * FROM users;
-# """
-# result = db_managaer._execute_query(query=query)
+        embedding = embedding_future.result()
+        chat_response = chat_future.result()
 
-# print(result)
+    print("Embedding:", embedding)
+    print("Chat Response:", chat_response)
 
-from app.constants.log_messages import LogMessages
-
-print(LogMessages.CREATE_VECTOR_ERROR.format("Hello"))
+if __name__ == "__main__":
+    main()
