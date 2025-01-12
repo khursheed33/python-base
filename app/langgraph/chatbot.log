@@ -1,0 +1,74 @@
+2025-01-12 22:04:20,581 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-01-12 22:04:20,582 - httpx - DEBUG - load_verify_locations cafile='d:\\PROJECTS\\PYTHON\\python-base\\.venv\\Lib\\site-packages\\certifi\\cacert.pem'
+2025-01-12 22:04:20,958 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-01-12 22:04:20,959 - httpx - DEBUG - load_verify_locations cafile='d:\\PROJECTS\\PYTHON\\python-base\\.venv\\Lib\\site-packages\\certifi\\cacert.pem'
+2025-01-12 22:04:21,354 - ChatBotApp - DEBUG - Setting up the workflow.
+2025-01-12 22:04:21,356 - ChatBotApp - INFO - Workflow setup completed.
+2025-01-12 22:04:21,358 - ChatBotApp - INFO - Starting the application.
+2025-01-12 22:04:21,362 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-01-12 22:04:34,258 - ChatBotApp - DEBUG - Incoming chat request: message='what is the highest score of Virat in 2022?', conversation_id: khursheed
+2025-01-12 22:04:34,258 - ChatBotApp - ERROR - Error in chat method.
+Traceback (most recent call last):
+  File "D:\PROJECTS\PYTHON\python-base\app\langgraph\langgraph.conversational_chat.py", line 84, in chat
+    messages = self.conversations[conversation_id]
+               ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'khursheed'
+2025-01-12 22:04:34,263 - ChatBotApp - ERROR - Error in chat endpoint: 'khursheed'
+2025-01-12 22:07:13,404 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-01-12 22:07:13,405 - httpx - DEBUG - load_verify_locations cafile='d:\\PROJECTS\\PYTHON\\python-base\\.venv\\Lib\\site-packages\\certifi\\cacert.pem'
+2025-01-12 22:07:13,867 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-01-12 22:07:13,868 - httpx - DEBUG - load_verify_locations cafile='d:\\PROJECTS\\PYTHON\\python-base\\.venv\\Lib\\site-packages\\certifi\\cacert.pem'
+2025-01-12 22:07:14,357 - ChatBotApp - DEBUG - Setting up the workflow.
+2025-01-12 22:07:14,358 - ChatBotApp - INFO - Workflow setup completed.
+2025-01-12 22:07:14,360 - ChatBotApp - INFO - Starting the application.
+2025-01-12 22:07:14,364 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-01-12 22:07:20,180 - ChatBotApp - DEBUG - Incoming chat request: message='what is the highest score of Virat in 2022?', conversation_id: khursheed
+2025-01-12 22:07:20,181 - ChatBotApp - DEBUG - Started a new conversation with ID: 5c522b4a-16af-4a0d-9b38-6ad5160f59df
+2025-01-12 22:07:20,182 - ChatBotApp - DEBUG - Message added to conversation 5c522b4a-16af-4a0d-9b38-6ad5160f59df: what is the highest score of Virat in 2022?
+2025-01-12 22:07:20,183 - ChatBotApp - ERROR - Error in chat method.
+Traceback (most recent call last):
+  File "D:\PROJECTS\PYTHON\python-base\app\langgraph\langgraph.conversational_chat.py", line 94, in chat
+    state = await self.graph.arun({
+                  ^^^^^^^^^^^^^^^
+AttributeError: 'CompiledStateGraph' object has no attribute 'arun'
+2025-01-12 22:07:20,186 - ChatBotApp - ERROR - Error in chat endpoint: 'CompiledStateGraph' object has no attribute 'arun'
+2025-01-12 22:09:07,728 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-01-12 22:09:07,729 - httpx - DEBUG - load_verify_locations cafile='d:\\PROJECTS\\PYTHON\\python-base\\.venv\\Lib\\site-packages\\certifi\\cacert.pem'
+2025-01-12 22:09:08,122 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-01-12 22:09:08,123 - httpx - DEBUG - load_verify_locations cafile='d:\\PROJECTS\\PYTHON\\python-base\\.venv\\Lib\\site-packages\\certifi\\cacert.pem'
+2025-01-12 22:09:08,576 - ChatBotApp - DEBUG - Setting up the workflow.
+2025-01-12 22:09:08,580 - ChatBotApp - INFO - Starting the application.
+2025-01-12 22:09:08,583 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-01-12 22:09:12,492 - ChatBotApp - DEBUG - Incoming chat request: message='what is the highest score of Virat in 2022?', conversation_id: khursheed
+2025-01-12 22:09:12,493 - ChatBotApp - ERROR - Error in chat: 'khursheed'
+2025-01-12 22:09:12,494 - ChatBotApp - ERROR - Error in chat endpoint: 500: 'khursheed'
+2025-01-12 22:10:41,463 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-01-12 22:10:41,464 - httpx - DEBUG - load_verify_locations cafile='d:\\PROJECTS\\PYTHON\\python-base\\.venv\\Lib\\site-packages\\certifi\\cacert.pem'
+2025-01-12 22:10:41,818 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-01-12 22:10:41,819 - httpx - DEBUG - load_verify_locations cafile='d:\\PROJECTS\\PYTHON\\python-base\\.venv\\Lib\\site-packages\\certifi\\cacert.pem'
+2025-01-12 22:10:42,188 - ChatBotApp - DEBUG - Setting up the workflow.
+2025-01-12 22:10:42,191 - ChatBotApp - INFO - Starting the application.
+2025-01-12 22:10:42,195 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-01-12 22:11:03,180 - ChatBotApp - DEBUG - Incoming chat request: message='what is the highest score of Virat in 2022?', conversation_id: 123
+2025-01-12 22:11:03,181 - ChatBotApp - ERROR - Chat error: 'CompiledStateGraph' object has no attribute 'run'
+Traceback (most recent call last):
+  File "D:\PROJECTS\PYTHON\python-base\app\langgraph\langgraph.conversational_chat.py", line 92, in chat
+    state = self.graph.run({
+            ^^^^^^^^^^^^^^
+AttributeError: 'CompiledStateGraph' object has no attribute 'run'
+2025-01-12 22:11:03,182 - ChatBotApp - ERROR - Error in chat endpoint: 500: Failed to process message: 'CompiledStateGraph' object has no attribute 'run'
+Traceback (most recent call last):
+  File "D:\PROJECTS\PYTHON\python-base\app\langgraph\langgraph.conversational_chat.py", line 92, in chat
+    state = self.graph.run({
+            ^^^^^^^^^^^^^^
+AttributeError: 'CompiledStateGraph' object has no attribute 'run'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\PROJECTS\PYTHON\python-base\app\langgraph\langgraph.conversational_chat.py", line 123, in chat_endpoint
+    response = await chatbot.chat(request.message, conversation_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\PYTHON\python-base\app\langgraph\langgraph.conversational_chat.py", line 106, in chat
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 500: Failed to process message: 'CompiledStateGraph' object has no attribute 'run'

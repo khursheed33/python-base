@@ -4,6 +4,10 @@ from typing_extensions import NotRequired, TypedDict
 from langgraph.graph import StateGraph, END
 from dotenv import load_dotenv
 import groq
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+import uvicorn
+from uuid import uuid4
 
 
 # Load environment variables
@@ -32,6 +36,17 @@ class GraphState(TypedDict):
     response: NotRequired[str]
 
 
+# API Models
+class ChatRequest(BaseModel):
+    message: str
+    conversation_id: Optional[str] = None
+
+
+class ChatResponse(BaseModel):
+    response: str
+    conversation_id: str
+
+
 # GROQ client wrapper
 class GroqClient:
     def __init__(self, api_key: str):
@@ -43,6 +58,27 @@ class GroqClient:
             model=model,
         )
         return response.choices[0].message.content
+
+
+# Conversation Manager
+class ConversationManager:
+    def __init__(self):
+        self.conversations: Dict[str, List[Message]] = {}
+
+    def create_conversation(self) -> str:
+        conversation_id = str(uuid4())
+        self.conversations[conversation_id] = []
+        return conversation_id
+
+    def get_conversation(self, conversation_id: str) -> List[Message]:
+        if conversation_id not in self.conversations:
+            raise ValueError(f"Conversation {conversation_id} not found")
+        return self.conversations[conversation_id]
+
+    def add_message(self, conversation_id: str, message: Message) -> None:
+        if conversation_id not in self.conversations:
+            raise ValueError(f"Conversation {conversation_id} not found")
+        self.conversations[conversation_id].append(message)
 
 
 # StateGraph Workflow Manager
@@ -64,40 +100,68 @@ class WorkflowManager:
         }
 
     def _configure_workflow(self) -> None:
-        # Add nodes
         self.workflow.add_node("process", self._process_message)
-
-        # Add edges
         self.workflow.set_entry_point("process")
         self.workflow.add_conditional_edges(
             "process", lambda x: x["next_node"], {None: END}
         )
-
-        # Compile the workflow
         self.app = self.workflow.compile()
 
     def invoke_workflow(self, state: GraphState) -> GraphState:
         return self.app.invoke(state)
 
 
-# Main Application
+# Chat Application with FastAPI
 class ChatApplication:
     def __init__(self, workflow_manager: WorkflowManager):
         self.workflow_manager = workflow_manager
+        self.conversation_manager = ConversationManager()
+        self.api = FastAPI(title="Conversational Chatbot API")
+        self._configure_routes()
 
-    def process_input(self, user_input: str) -> str:
-        initial_state = {
-            "messages": [{"role": "user", "content": user_input}],
-            "next_node": "",
-            "response": "",
-        }
-        final_state = self.workflow_manager.invoke_workflow(initial_state)
-        return final_state["response"]
+    def _configure_routes(self) -> None:
+        @self.api.post("/chat", response_model=ChatResponse)
+        async def chat(request: ChatRequest) -> ChatResponse:
+            try:
+                # Get or create conversation
+                conversation_id = request.conversation_id or self.conversation_manager.create_conversation()
+                
+                # Get conversation history
+                conversation = self.conversation_manager.get_conversation(conversation_id)
+                
+                # Add user message to conversation
+                user_message = {"role": "user", "content": request.message}
+                conversation.append(user_message)
+                
+                # Process message through workflow
+                state = {
+                    "messages": conversation,
+                    "next_node": "",
+                    "response": "",
+                }
+                final_state = self.workflow_manager.invoke_workflow(state)
+                
+                # Add assistant response to conversation
+                assistant_message = {"role": "assistant", "content": final_state["response"]}
+                conversation.append(assistant_message)
+                
+                return ChatResponse(
+                    response=final_state["response"],
+                    conversation_id=conversation_id
+                )
+            
+            except Exception as e:
+                raise HTTPException(status_code=500, detail=str(e))
 
-    def run(self, inputs: List[str]) -> None:
-        for input_text in inputs:
-            print(f"\nInput: {input_text}")
-            print(f"Response: {self.process_input(input_text)}")
+        @self.api.get("/conversations/{conversation_id}")
+        async def get_conversation(conversation_id: str) -> List[Message]:
+            try:
+                return self.conversation_manager.get_conversation(conversation_id)
+            except ValueError as e:
+                raise HTTPException(status_code=404, detail=str(e))
+
+    def run(self, host: str = "0.0.0.0", port: int = 8000) -> None:
+        uvicorn.run(self.api, host=host, port=port)
 
 
 if __name__ == "__main__":
@@ -111,11 +175,4 @@ if __name__ == "__main__":
     chat_app = ChatApplication(workflow_manager=workflow_manager)
 
     # Run the application
-    example_inputs = [
-        "What is the derivative of x^2?",
-        "What are the symptoms of flu?",
-        "How does photosynthesis work?",
-        "Explain Newton's laws",
-        "What's your favorite color?",
-    ]
-    chat_app.run(example_inputs)
+    chat_app.run()
